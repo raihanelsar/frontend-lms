@@ -7,12 +7,16 @@ const Sidebar = ({ isOpen, setIsOpen, isCollapsed, setIsCollapsed }) => {
   const { pathname } = useLocation();
 
   const links = [
-    { name: "🏠 Dashboard", path: "/" },
-    { name: "📚 Courses", path: "/courses" },
-    { name: "📂 Materials", path: "/materials" },
-    { name: "📝 Tasks", path: "/tasks" },
-    { name: "👤 Profile", path: "/profile" },
-  ];
+  { name: "🏠 Dashboard", path: "/" },
+  { name: "📚 Courses", path: "/courses" },
+  { name: "📂 Materials", path: "/materials" },
+  { name: "📝 Tasks", path: "/tasks" },
+  { name: "📅 Schedule", path: "/schedule" },
+  { name: "🎓 Grades", path: "/grades" },
+  { name: "📢 Announcements", path: "/announcements" },
+  { name: "👤 Profile", path: "/profile" },
+];
+
 
   const handleLogout = () => {
     Swal.fire({
@@ -54,7 +58,7 @@ const Sidebar = ({ isOpen, setIsOpen, isCollapsed, setIsCollapsed }) => {
 
           <button
             onClick={() => setIsCollapsed((s) => !s)}
-            className="p-2 rounded-md hover:bg-gray-100 transition"
+            className="p-2 transition rounded-md hover:bg-gray-100"
             aria-label="Toggle collapse"
           >
             <FaChevronLeft className={`${isCollapsed ? "rotate-180" : ""}`} />
@@ -62,7 +66,7 @@ const Sidebar = ({ isOpen, setIsOpen, isCollapsed, setIsCollapsed }) => {
         </div>
 
         {/* Navigation Links */}
-        <nav className="flex-1 overflow-y-auto px-2 py-4 space-y-1">
+        <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
           {links.map((link) => {
             const active = pathname === link.path;
             return (
@@ -92,7 +96,7 @@ const Sidebar = ({ isOpen, setIsOpen, isCollapsed, setIsCollapsed }) => {
         <div className="px-4 py-4 border-t border-gray-200">
           <button
             onClick={handleLogout}
-            className="w-full py-2 rounded-md text-white bg-red-600 hover:bg-red-700 transition"
+            className="w-full py-2 text-white transition bg-red-600 rounded-md hover:bg-red-700"
           >
             {isCollapsed ? "🚪" : "🚪 Logout"}
           </button>
