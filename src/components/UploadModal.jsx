@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-function UploadModal({ onClose }) {
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-xl shadow-lg w-96 relative">
-=======
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { FaCloudUploadAlt, FaTimes } from "react-icons/fa";
@@ -43,38 +37,10 @@ export default function UploadModal({ onClose }) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center animate-fadeIn z-50">
       <div className="bg-white p-6 rounded-2xl shadow-xl w-96 relative animate-slideUp">
         {/* Tombol Tutup */}
->>>>>>> 8e2d8d9 (update dashboard)
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
         >
-<<<<<<< HEAD
-          ✕
-        </button>
-
-        <h2 className="text-lg font-semibold mb-4">Upload Tugas</h2>
-
-        <form className="space-y-4">
-          <div>
-            <label className="text-sm text-gray-700">Pilih File</label>
-            <input
-              type="file"
-              className="block w-full mt-2 text-sm border rounded-lg p-2"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm text-gray-700">Catatan</label>
-            <textarea
-              className="w-full mt-2 border rounded-lg p-2 text-sm"
-              placeholder="Tambahkan catatan untuk guru..."
-            ></textarea>
-          </div>
-
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 w-full"
-=======
           <FaTimes size={18} />
         </button>
 
@@ -119,7 +85,6 @@ export default function UploadModal({ onClose }) {
           <button
             type="submit"
             className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg w-full transition"
->>>>>>> 8e2d8d9 (update dashboard)
           >
             Kirim Tugas
           </button>
@@ -129,9 +94,6 @@ export default function UploadModal({ onClose }) {
   );
 }
 
-<<<<<<< HEAD
-export default UploadModal;
-=======
 /* Animasi tambahan (masukkan ke global CSS misal index.css)
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -144,4 +106,3 @@ export default UploadModal;
 .animate-fadeIn { animation: fadeIn 0.2s ease-in-out; }
 .animate-slideUp { animation: slideUp 0.3s ease-in-out; }
 */
->>>>>>> 8e2d8d9 (update dashboard)
