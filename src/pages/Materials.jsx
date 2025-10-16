@@ -1,3 +1,4 @@
+// src/pages/teacher/Materials.jsx
 import React, { useState } from "react";
 import { FaFileAlt, FaVideo, FaPlus, FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 
@@ -36,25 +37,26 @@ export default function Materials() {
     course: "",
   });
 
-  // Tambah atau Edit Materi
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editMaterial) {
-      setMaterials(materials.map((m) => (m.id === editMaterial.id ? { ...m, ...formData } : m)));
+      // Update data
+      setMaterials(
+        materials.map((m) => (m.id === editMaterial.id ? { ...m, ...formData } : m))
+      );
     } else {
+      // Tambah data baru
       setMaterials([...materials, { id: Date.now(), ...formData }]);
     }
     resetForm();
   };
 
-  // Hapus Materi
   const handleDelete = (id) => {
     if (window.confirm("Yakin ingin menghapus materi ini?")) {
       setMaterials(materials.filter((m) => m.id !== id));
     }
   };
 
-  // Edit Materi
   const handleEdit = (material) => {
     setEditMaterial(material);
     setFormData(material);
@@ -67,25 +69,24 @@ export default function Materials() {
     setShowModal(false);
   };
 
-  // Filter pencarian
   const filteredMaterials = materials.filter((m) =>
     m.title.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <div className="container py-8">
+    <div className="p-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">Materi Pembelajaran</h1>
-          <p className="text-gray-500">Kelola semua materi dari setiap kursus di sini.</p>
+          <h1 className="text-3xl font-bold text-gray-800">📚 Materi Pembelajaran</h1>
+          <p className="text-gray-500">Kelola materi pelajaran untuk setiap kursus.</p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-full md:w-auto">
           <input
             type="text"
-            placeholder="Cari materi..."
-            className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="🔍 Cari materi..."
+            className="border rounded-lg px-3 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -93,19 +94,18 @@ export default function Materials() {
             onClick={() => setShowModal(true)}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition"
           >
-            <FaPlus />
-            Tambah Materi
+            <FaPlus /> Tambah
           </button>
         </div>
       </div>
 
-      {/* Grid Materials */}
+      {/* Materials Grid */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredMaterials.length > 0 ? (
           filteredMaterials.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col justify-between hover:-translate-y-1"
+              className="bg-white border border-gray-200 rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col justify-between hover:-translate-y-1"
             >
               <div className="flex items-center gap-3 mb-4">
                 {item.type === "video" ? (
@@ -129,12 +129,14 @@ export default function Materials() {
                   <button
                     onClick={() => handleEdit(item)}
                     className="text-blue-600 hover:text-blue-800"
+                    title="Edit"
                   >
                     <FaEdit />
                   </button>
                   <button
                     onClick={() => handleDelete(item.id)}
                     className="text-red-500 hover:text-red-700"
+                    title="Hapus"
                   >
                     <FaTrash />
                   </button>
@@ -143,14 +145,17 @@ export default function Materials() {
             </div>
           ))
         ) : (
-          <p className="text-gray-500 text-center col-span-full">Materi tidak ditemukan.</p>
+          <div className="col-span-full flex flex-col items-center justify-center py-10 text-gray-500">
+            <FaFileAlt className="text-4xl mb-2 opacity-60" />
+            <p>Tidak ada materi yang ditemukan.</p>
+          </div>
         )}
       </div>
 
       {/* Modal Tambah/Edit */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white w-full max-w-md rounded-xl shadow-lg p-6 relative">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-fadeIn">
+          <div className="bg-white w-full max-w-md rounded-xl shadow-xl p-6 relative">
             <button
               onClick={resetForm}
               className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
@@ -158,37 +163,46 @@ export default function Materials() {
               <FaTimes />
             </button>
 
-            <h2 className="text-xl font-semibold mb-4">
-              {editMaterial ? "Edit Materi" : "Tambah Materi"}
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">
+              {editMaterial ? "✏️ Edit Materi" : "➕ Tambah Materi"}
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="text"
-                placeholder="Judul Materi"
-                className="w-full border px-3 py-2 rounded-lg"
-                value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                required
-              />
-              <textarea
-                placeholder="Deskripsi Materi"
-                className="w-full border px-3 py-2 rounded-lg"
-                rows="3"
-                value={formData.desc}
-                onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Nama Kursus"
-                className="w-full border px-3 py-2 rounded-lg"
-                value={formData.course}
-                onChange={(e) => setFormData({ ...formData, course: e.target.value })}
-                required
-              />
               <div>
-                <label className="text-sm text-gray-600">Tipe Materi:</label>
+                <label className="text-sm text-gray-600">Judul Materi</label>
+                <input
+                  type="text"
+                  className="w-full border px-3 py-2 rounded-lg mt-1"
+                  value={formData.title}
+                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="text-sm text-gray-600">Deskripsi</label>
+                <textarea
+                  className="w-full border px-3 py-2 rounded-lg mt-1"
+                  rows="3"
+                  value={formData.desc}
+                  onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="text-sm text-gray-600">Nama Kursus</label>
+                <input
+                  type="text"
+                  className="w-full border px-3 py-2 rounded-lg mt-1"
+                  value={formData.course}
+                  onChange={(e) => setFormData({ ...formData, course: e.target.value })}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="text-sm text-gray-600">Tipe Materi</label>
                 <select
                   className="w-full border px-3 py-2 rounded-lg mt-1"
                   value={formData.type}

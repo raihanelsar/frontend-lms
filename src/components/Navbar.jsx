@@ -1,19 +1,30 @@
+// src/components/Navbar.jsx
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   FaBook,
   FaUserCircle,
   FaSignOutAlt,
   FaBell,
   FaCheckCircle,
+  FaCalendarAlt,
+  FaBullhorn,
+  FaTasks,
+  FaFileAlt,
+  FaGraduationCap,
+  FaHome,
 } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
-  const [user, setUser] = useState({ name: "Guest", photo: "https://i.pravatar.cc/40" });
+  const [user, setUser] = useState({
+    name: "Guest",
+    photo: "https://i.pravatar.cc/40",
+  });
   const [notifications, setNotifications] = useState([
     { id: 1, title: "Ujian Tengah Semester", detail: "UTS dimulai 20 Okt 2025", read: false },
     { id: 2, title: "Tugas Baru", detail: "Tugas CSS Layout sudah tersedia", read: false },
@@ -34,7 +45,7 @@ export default function Navbar() {
     }
   }, []);
 
-  // Tutup dropdown saat klik di luar area
+  // Tutup dropdown saat klik di luar
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -74,15 +85,23 @@ export default function Navbar() {
   };
 
   const markAllAsRead = () => {
-    setNotifications((prev) =>
-      prev.map((notif) => ({ ...notif, read: true }))
-    );
+    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
   };
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
+  const menuItems = [
+    { name: "Dashboard", path: "/", icon: <FaHome /> },
+    { name: "Courses", path: "/courses", icon: <FaBook /> },
+    { name: "Materials", path: "/materials", icon: <FaFileAlt /> },
+    { name: "Tasks", path: "/tasks", icon: <FaTasks /> },
+    { name: "Announcement", path: "/announcement", icon: <FaBullhorn /> },
+    { name: "Grades", path: "/grades", icon: <FaGraduationCap /> },
+    { name: "Schedule", path: "/schedule", icon: <FaCalendarAlt /> },
+  ];
+
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white shadow-sm border-b border-gray-200 z-50">
+    <nav className="fixed top-0 left-0 right-0 bg-white shadow border-b border-gray-200 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link
@@ -93,35 +112,23 @@ export default function Navbar() {
           <span>EduLMS</span>
         </Link>
 
-        {/* Menu */}
-        <div className="hidden md:flex space-x-6">
-          <Link
-            to="/"
-            className="text-gray-700 hover:text-blue-600 font-medium transition"
-          >
-            🏠 Dashboard
-          </Link>
-          <Link
-            to="/courses"
-            className="text-gray-700 hover:text-blue-600 font-medium transition"
-          >
-            📚 Courses
-          </Link>
-          <Link
-            to="/materials"
-            className="text-gray-700 hover:text-blue-600 font-medium transition"
-          >
-            📁 Materials
-          </Link>
-          <Link
-            to="/tasks"
-            className="text-gray-700 hover:text-blue-600 font-medium transition"
-          >
-            ✅ Tasks
-          </Link>
+        {/* Menu Desktop */}
+        <div className="hidden md:flex space-x-4">
+          {menuItems.map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              className={`flex items-center gap-2 text-gray-700 font-medium transition px-2 py-1 rounded-md hover:text-blue-600 ${
+                location.pathname === item.path ? "text-blue-600 font-semibold" : ""
+              }`}
+            >
+              {item.icon}
+              <span>{item.name}</span>
+            </Link>
+          ))}
         </div>
 
-        {/* Notifikasi + Profil */}
+        {/* Notifikasi & Profile */}
         <div className="flex items-center space-x-4">
           {/* Notifikasi */}
           <div className="relative" ref={notifRef}>
@@ -176,7 +183,7 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Profil Dropdown */}
+          {/* Profile Dropdown */}
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -213,6 +220,22 @@ export default function Navbar() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div className="md:hidden border-t bg-white px-4 py-2 flex flex-wrap justify-around text-sm">
+        {menuItems.map((item) => (
+          <Link
+            key={item.name}
+            to={item.path}
+            className={`flex flex-col items-center py-1 ${
+              location.pathname === item.path ? "text-blue-600" : "text-gray-600"
+            }`}
+          >
+            {item.icon}
+            <span>{item.name}</span>
+          </Link>
+        ))}
       </div>
     </nav>
   );

@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -53,8 +54,13 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-blue-50">
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-sm">
+        <img 
+        src="/Learncord.png" 
+        alt="learncord logo" 
+        className="w-30 h-30 mx-auto mb-2"
+        />
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
-          Login
+          Masuk ke LearnCord
         </h2>
 
         <form onSubmit={handleLogin} className="space-y-4">
