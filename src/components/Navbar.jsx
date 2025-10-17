@@ -91,29 +91,30 @@ export default function Navbar() {
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   const menuItems = [
-    { name: "Dashboard", path: "/", icon: <FaHome /> },
-    { name: "Courses", path: "/courses", icon: <FaBook /> },
-    { name: "Materials", path: "/materials", icon: <FaFileAlt /> },
-    { name: "Tasks", path: "/tasks", icon: <FaTasks /> },
-    { name: "Announcement", path: "/announcement", icon: <FaBullhorn /> },
-    { name: "Grades", path: "/grades", icon: <FaGraduationCap /> },
-    { name: "Schedule", path: "/schedule", icon: <FaCalendarAlt /> },
+    { name: "🏠 Dashboard", path: "/" },
+    { name: "📚 Courses", path: "/courses" },
+    { name: "📂 Materials", path: "/materials" },
+    { name: "📝 Tasks", path: "/tasks" },
+    { name: "📢 Announcement", path: "/announcement" },
+    { name: "🎓 Grades", path: "/grades" },
+    { name: "📅 Schedule", path: "/schedule" },
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white shadow border-b border-gray-200 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <Link
-          to="/"
-          className="text-xl font-semibold text-blue-600 flex items-center space-x-2"
-        >
-          <FaBook className="text-blue-600" />
-          <span>EduLMS</span>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow">
+      <div className="flex items-center justify-between h-16 px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        {/* 🔹 Logo */}
+        <Link to="/" className="flex items-center space-x-2 text-xl font-semibold text-blue-600">
+          <img
+            src="/Learncord.png"
+            alt="Learncord Logo"
+            className="object-contain w-10 h-10"
+          />
+          <span>Learncord</span>
         </Link>
 
         {/* Menu Desktop */}
-        <div className="hidden md:flex space-x-4">
+        <div className="hidden space-x-4 md:flex">
           {menuItems.map((item) => (
             <Link
               key={item.name}
@@ -136,16 +137,16 @@ export default function Navbar() {
               onClick={() => setNotifOpen(!notifOpen)}
               className="relative focus:outline-none"
             >
-              <FaBell className="w-6 h-6 text-gray-700 hover:text-blue-600 transition" />
+              <FaBell className="w-6 h-6 text-gray-700 transition hover:text-blue-600" />
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="absolute flex items-center justify-center w-4 h-4 text-xs text-white bg-red-500 rounded-full -top-1 -right-1">
                   {unreadCount}
                 </span>
               )}
             </button>
 
             {notifOpen && (
-              <div className="absolute right-0 mt-3 w-80 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden animate-fadeIn">
+              <div className="absolute right-0 mt-3 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg w-80 animate-fadeIn">
                 <div className="flex items-center justify-between px-4 py-2 border-b bg-gray-50">
                   <h3 className="text-sm font-semibold text-gray-700">Notifikasi</h3>
                   {unreadCount > 0 && (
@@ -157,9 +158,9 @@ export default function Navbar() {
                     </button>
                   )}
                 </div>
-                <ul className="max-h-60 overflow-y-auto">
+                <ul className="overflow-y-auto max-h-60">
                   {notifications.length === 0 ? (
-                    <li className="px-4 py-3 text-sm text-gray-500 text-center">
+                    <li className="px-4 py-3 text-sm text-center text-gray-500">
                       Tidak ada notifikasi
                     </li>
                   ) : (
@@ -173,7 +174,7 @@ export default function Navbar() {
                         <p className="font-medium">{n.title}</p>
                         <p className="text-xs text-gray-500">{n.detail}</p>
                         {n.read && (
-                          <FaCheckCircle className="text-green-500 text-xs inline ml-1" />
+                          <FaCheckCircle className="inline ml-1 text-xs text-green-500" />
                         )}
                       </li>
                     ))
@@ -192,26 +193,26 @@ export default function Navbar() {
               <img
                 src={user.photo}
                 alt="Profile"
-                className="w-8 h-8 rounded-full border border-gray-300"
+                className="w-8 h-8 border border-gray-300 rounded-full"
               />
-              <span className="hidden md:inline text-gray-800 font-medium">
+              <span className="hidden font-medium text-gray-800 md:inline">
                 {user.name}
               </span>
             </button>
 
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-md py-2 animate-fadeIn">
+              <div className="absolute right-0 w-48 py-2 mt-2 bg-white border border-gray-200 rounded-lg shadow-md animate-fadeIn">
                 <Link
                   to="/profile"
                   onClick={() => setDropdownOpen(false)}
-                  className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition"
+                  className="flex items-center px-4 py-2 space-x-2 text-gray-700 transition hover:bg-gray-100"
                 >
                   <FaUserCircle />
                   <span>Profile</span>
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center space-x-2 w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 transition"
+                  className="flex items-center w-full px-4 py-2 space-x-2 text-left text-red-600 transition hover:bg-gray-100"
                 >
                   <FaSignOutAlt />
                   <span>Logout</span>
@@ -223,7 +224,7 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu */}
-      <div className="md:hidden border-t bg-white px-4 py-2 flex flex-wrap justify-around text-sm">
+      <div className="flex flex-wrap justify-around px-4 py-2 text-sm bg-white border-t md:hidden">
         {menuItems.map((item) => (
           <Link
             key={item.name}
