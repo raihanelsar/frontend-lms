@@ -3,10 +3,10 @@ import React from "react";
 
 const AuthLayout = ({ title, subtitle, children }) => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-200 p-6">
-      <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-gray-800 mb-2 text-center">{title}</h1>
-        <p className="text-gray-500 text-sm text-center mb-6">{subtitle}</p>
+    <div className="flex items-center justify-center min-h-screen p-6 bg-gradient-to-br from-blue-100 via-white to-blue-200">
+      <div className="w-full max-w-md p-8 bg-white shadow-xl rounded-2xl">
+        <h1 className="mb-2 text-2xl font-bold text-center text-gray-800">{title}</h1>
+        <p className="mb-6 text-sm text-center text-gray-500">{subtitle}</p>
         {children}
       </div>
     </div>

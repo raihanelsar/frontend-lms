@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { scheduleData } from "../data/scheduleData";
-import ScheduleCalendar from "../components/Schedule/ScheduleCalendar";
-import ScheduleList from "../components/Schedule/ScheduleList";
+import { scheduleData } from "../../data/scheduleData";
+import ScheduleCalendar from "../../components/Schedule/ScheduleCalendar";
+import ScheduleList from "../../components/Schedule/ScheduleList";
 
-export default function SchedulePage() {
+export default function Schedule() {
   const [selectedDate, setSelectedDate] = useState("2025-10-14");
 
   return (

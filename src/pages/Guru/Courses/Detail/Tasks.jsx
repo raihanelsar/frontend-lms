@@ -55,7 +55,7 @@ export default function Tasks() {
   return (
     <div className="container py-8">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+      <div className="flex flex-col items-start justify-between gap-4 mb-8 md:flex-row md:items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-800">Daftar Tugas</h1>
           <p className="text-gray-500">Kelola tugas dan kegiatan pembelajaran di sini.</p>
@@ -65,13 +65,13 @@ export default function Tasks() {
           <input
             type="text"
             placeholder="Cari tugas..."
-            className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition"
+            className="flex items-center gap-2 px-4 py-2 text-white transition bg-blue-600 rounded-lg shadow hover:bg-blue-700"
           >
             <FaPlus />
             Tambah Tugas
@@ -80,19 +80,19 @@ export default function Tasks() {
       </div>
 
       {/* Task Cards */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filteredTasks.length > 0 ? (
           filteredTasks.map((task) => (
             <div
               key={task.id}
-              className="bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col justify-between hover:-translate-y-1"
+              className="flex flex-col justify-between p-6 transition bg-white shadow rounded-xl hover:shadow-lg hover:-translate-y-1"
             >
               <div>
                 <h3 className="text-xl font-semibold text-gray-800">{task.title}</h3>
-                <p className="text-gray-500 text-sm mt-2 mb-4">{task.description}</p>
+                <p className="mt-2 mb-4 text-sm text-gray-500">{task.description}</p>
               </div>
 
-              <div className="flex justify-between items-center text-sm mt-auto">
+              <div className="flex items-center justify-between mt-auto text-sm">
                 <span className="text-gray-600">🗓️ {task.due || "Tidak ada tenggat"}</span>
                 <div className="flex gap-3">
                   <button
@@ -112,7 +112,7 @@ export default function Tasks() {
             </div>
           ))
         ) : (
-          <p className="text-gray-500 text-center col-span-full">
+          <p className="text-center text-gray-500 col-span-full">
             Tidak ada tugas yang ditemukan.
           </p>
         )}
@@ -120,16 +120,16 @@ export default function Tasks() {
 
       {/* Modal Tambah/Edit */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white w-full max-w-md rounded-xl shadow-lg p-6 relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="relative w-full max-w-md p-6 bg-white shadow-lg rounded-xl">
             <button
               onClick={resetForm}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+              className="absolute text-gray-500 top-3 right-3 hover:text-gray-800"
             >
               <FaTimes />
             </button>
 
-            <h2 className="text-xl font-semibold mb-4">
+            <h2 className="mb-4 text-xl font-semibold">
               {editTask ? "Edit Tugas" : "Tambah Tugas"}
             </h2>
 
@@ -137,14 +137,14 @@ export default function Tasks() {
               <input
                 type="text"
                 placeholder="Judul Tugas"
-                className="w-full border px-3 py-2 rounded-lg"
+                className="w-full px-3 py-2 border rounded-lg"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 required
               />
               <textarea
                 placeholder="Deskripsi"
-                className="w-full border px-3 py-2 rounded-lg"
+                className="w-full px-3 py-2 border rounded-lg"
                 rows="3"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -154,7 +154,7 @@ export default function Tasks() {
                 <label className="text-sm text-gray-600">Tenggat Waktu:</label>
                 <input
                   type="date"
-                  className="w-full border px-3 py-2 rounded-lg mt-1"
+                  className="w-full px-3 py-2 mt-1 border rounded-lg"
                   value={formData.due}
                   onChange={(e) => setFormData({ ...formData, due: e.target.value })}
                 />
@@ -164,13 +164,13 @@ export default function Tasks() {
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="px-4 py-2 rounded-lg border hover:bg-gray-100"
+                  className="px-4 py-2 border rounded-lg hover:bg-gray-100"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+                  className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
                 >
                   {editTask ? "Simpan Perubahan" : "Tambah"}
                 </button>

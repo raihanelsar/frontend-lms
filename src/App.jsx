@@ -1,112 +1,62 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Dashboard from "./pages/Dashboard";
-import Courses from "./pages/Courses";
-import Materials from "./pages/Materials";
-import Tasks from "./pages/Tasks";
-import Grades from "./pages/Grades";
-import Announcement from "./pages/Announcement";
-import Schedule from "./pages/Schedule";
-import Profile from "./pages/Profile";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import GuruLayout from "./layout/GuruLayout";
+import Dashboard from "./pages/Guru/Dashboard/Dashboard";
+import Courses from "./pages/Guru/Courses/Courses";
+import CourseDetail from "./pages/Guru/Courses/Detail/CourseDetail";
+import Schedule from "./pages/Guru/Schedule";
+import Announcement from "./pages/Guru/Announcement";
+import Profile from "./pages/Guru/Profile";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+import Logout from "./pages/Auth/Logout";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
 
-// Komponen wrapper untuk proteksi halaman
-function PrivateRoute({ children }) {
-  const user = localStorage.getItem("user");
-  return user ? children : <Navigate to="/login" />;
-}
-
-// Komponen untuk menyembunyikan Navbar di halaman tertentu
-function Layout({ children }) {
-  const location = useLocation();
-  const hideNavbar = ["/login", "/register"].includes(location.pathname);
-
+function App() {
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900">
-      {!hideNavbar && <Navbar />}
-      <main className={`${!hideNavbar ? "pt-16 px-4 md:px-6" : ""}`}>{children}</main>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* === Auth Pages === */}
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+        <Route path="/logout" element={<Logout />} />
+
+        {/* === Guru Pages (protected) === */}
+        <Route
+          path="/guru"
+          element={
+            <ProtectedRoute>
+              <GuruLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="courses" element={<Courses />} />
+          <Route path="courses/:id" element={<CourseDetail />} />
+          <Route path="schedule" element={<Schedule />} />
+          <Route path="announcement" element={<Announcement />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
+
+        {/* Default route */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-export default function App() {
-  return (
-    <Router>
-      <Layout>
-        <Routes>
-          {/* Public routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-
-          {/* Protected routes */}
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/courses"
-            element={
-              <PrivateRoute>
-                <Courses />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/materials"
-            element={
-              <PrivateRoute>
-                <Materials />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/tasks"
-            element={
-              <PrivateRoute>
-                <Tasks />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/grades"
-            element={
-              <PrivateRoute>
-                <Grades />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/announcement"
-            element={
-              <PrivateRoute>
-                <Announcement />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/schedule"
-            element={
-              <PrivateRoute>
-                <Schedule />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
-      </Layout>
-    </Router>
-  );
-}
+export default App;
