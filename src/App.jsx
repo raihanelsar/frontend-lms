@@ -5,6 +5,9 @@ import Dashboard from "./pages/Dashboard";
 import Courses from "./pages/Courses";
 import Materials from "./pages/Materials";
 import Tasks from "./pages/Tasks";
+import Grades from "./pages/Grades";
+import Announcement from "./pages/Announcement";
+import Schedule from "./pages/Schedule";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -75,6 +78,30 @@ export default function App() {
             element={
               <PrivateRoute>
                 <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/grades"
+            element={
+              <PrivateRoute>
+                <Grades />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/announcement"
+            element={
+              <PrivateRoute>
+                <Announcement />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/schedule"
+            element={
+              <PrivateRoute>
+                <Schedule />
               </PrivateRoute>
             }
           />
