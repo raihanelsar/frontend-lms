@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+// src/pages/teacher/Tasks.jsx
+import React, { useState, useEffect } from "react";
 import { FaPlus, FaEdit, FaTrash, FaTimes } from "react-icons/fa";
+import { useParams } from "react-router-dom";
 
 export default function Tasks() {
-  const [tasks, setTasks] = useState([
-    { id: 1, title: "Membuat Modul Laravel", description: "Menyelesaikan modul backend LMS", due: "2025-10-20" },
-    { id: 2, title: "Membuat Komponen React", description: "Menyempurnakan halaman Tasks dengan React", due: "2025-10-25" },
-  ]);
-
+  const { id } = useParams(); // misal: id = 'pemrograman-web' atau 'database'
+  const [tasks, setTasks] = useState([]);
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [editTask, setEditTask] = useState(null);
@@ -16,7 +15,70 @@ export default function Tasks() {
     due: "",
   });
 
-  // Tambah/Edit Task
+  // === Data Dummy berdasarkan kelas ===
+  useEffect(() => {
+    if (id === "1") {
+      setTasks([
+        {
+          id: 1,
+          title: "Membuat Halaman Web Sederhana",
+          description:
+            "Gunakan HTML dan CSS untuk membuat halaman profil sederhana dengan layout responsif.",
+          due: "2025-10-25",
+        },
+        {
+          id: 2,
+          title: "Membuat Komponen React",
+          description:
+            "Buat komponen Card di React untuk menampilkan daftar kursus.",
+          due: "2025-10-30",
+        },
+        {
+          id: 3,
+          title: "Deploy Website ke GitHub Pages",
+          description:
+            "Lakukan deployment proyek React atau HTML ke GitHub Pages.",
+          due: "2025-11-02",
+        },
+      ]);
+    } else if (id === "2") {
+      setTasks([
+        {
+          id: 1,
+          title: "Membuat ERD Sistem Akademik",
+          description:
+            "Desain Entity Relationship Diagram (ERD) untuk sistem akademik sederhana.",
+          due: "2025-10-25",
+        },
+        {
+          id: 2,
+          title: "Implementasi Database MySQL",
+          description:
+            "Buat tabel-tabel di MySQL berdasarkan ERD yang telah dibuat.",
+          due: "2025-10-30",
+        },
+        {
+          id: 3,
+          title: "Query Data dengan JOIN",
+          description:
+            "Tulis query SQL untuk menampilkan data siswa dan mata pelajaran menggunakan INNER JOIN.",
+          due: "2025-11-05",
+        },
+      ]);
+    } else {
+      setTasks([
+        {
+          id: 1,
+          title: "Belum ada tugas untuk kelas ini",
+          description:
+            "Silakan tambahkan tugas baru sesuai dengan mata pelajaran.",
+          due: "",
+        },
+      ]);
+    }
+  }, [id]);
+
+  // === CRUD ===
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editTask) {
@@ -27,14 +89,12 @@ export default function Tasks() {
     resetForm();
   };
 
-  // Hapus Task
   const deleteTask = (id) => {
     if (window.confirm("Yakin ingin menghapus tugas ini?")) {
       setTasks(tasks.filter((t) => t.id !== id));
     }
   };
 
-  // Edit Task
   const handleEdit = (task) => {
     setEditTask(task);
     setFormData(task);
@@ -47,7 +107,6 @@ export default function Tasks() {
     setShowModal(false);
   };
 
-  // Filter pencarian
   const filteredTasks = tasks.filter((t) =>
     t.title.toLowerCase().includes(search.toLowerCase())
   );
@@ -58,7 +117,12 @@ export default function Tasks() {
       <div className="flex flex-col items-start justify-between gap-4 mb-8 md:flex-row md:items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-800">Daftar Tugas</h1>
-          <p className="text-gray-500">Kelola tugas dan kegiatan pembelajaran di sini.</p>
+          <p className="text-gray-500">
+            Kelola tugas sesuai kelas:{" "}
+            <span className="font-semibold text-blue-600 capitalize">
+              {id?.replace("-", " ")}
+            </span>
+          </p>
         </div>
 
         <div className="flex items-center gap-3">

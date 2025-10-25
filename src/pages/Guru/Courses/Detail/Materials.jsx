@@ -1,8 +1,8 @@
-// src/pages/teacher/Materials.jsx
 import React, { useState } from "react";
 import { FaFileAlt, FaVideo, FaPlus, FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 
-export default function Materials() {
+export default function Materials({ course }) {
+  // Data awal materi (dummy)
   const [materials, setMaterials] = useState([
     {
       id: 1,
@@ -13,17 +13,24 @@ export default function Materials() {
     },
     {
       id: 2,
-      title: "Struktur Database",
-      desc: "Konsep tabel, kolom, dan relasi dalam database MySQL.",
+      title: "CSS Dasar",
+      desc: "Belajar penggunaan selector dan properti dasar CSS untuk tampilan web.",
       type: "file",
-      course: "Database",
+      course: "Pemrograman Web",
     },
     {
       id: 3,
-      title: "Variabel dan Tipe Data",
-      desc: "Dasar penggunaan variabel di dalam Python.",
+      title: "Struktur Database",
+      desc: "Konsep tabel, kolom, dan relasi dalam database MySQL.",
       type: "video",
-      course: "Python Dasar",
+      course: "Database",
+    },
+    {
+      id: 4,
+      title: "Query SQL",
+      desc: "Latihan membuat query dasar untuk CRUD data.",
+      type: "file",
+      course: "Database",
     },
   ]);
 
@@ -34,19 +41,28 @@ export default function Materials() {
     title: "",
     desc: "",
     type: "video",
-    course: "",
+    course: course?.title || "",
   });
+
+  // Filter materi hanya untuk kelas yang sedang dibuka
+  const filteredMaterials = materials
+    .filter((m) => m.course === course?.title)
+    .filter((m) => m.title.toLowerCase().includes(search.toLowerCase()));
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (editMaterial) {
       // Update data
       setMaterials(
         materials.map((m) => (m.id === editMaterial.id ? { ...m, ...formData } : m))
       );
     } else {
-      // Tambah data baru
-      setMaterials([...materials, { id: Date.now(), ...formData }]);
+      // Tambah data baru dan otomatis diset ke course aktif
+      setMaterials([
+        ...materials,
+        { id: Date.now(), ...formData, course: course?.title || "Tanpa Kelas" },
+      ]);
     }
     resetForm();
   };
@@ -64,22 +80,27 @@ export default function Materials() {
   };
 
   const resetForm = () => {
-    setFormData({ title: "", desc: "", type: "video", course: "" });
+    setFormData({
+      title: "",
+      desc: "",
+      type: "video",
+      course: course?.title || "",
+    });
     setEditMaterial(null);
     setShowModal(false);
   };
-
-  const filteredMaterials = materials.filter((m) =>
-    m.title.toLowerCase().includes(search.toLowerCase())
-  );
 
   return (
     <div className="p-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">📚 Materi Pembelajaran</h1>
-          <p className="text-gray-500">Kelola materi pelajaran untuk setiap kursus.</p>
+          <h1 className="text-3xl font-bold text-gray-800">
+            📚 Materi Pembelajaran - {course?.title || "Tidak Ada Kelas"}
+          </h1>
+          <p className="text-gray-500">
+            Kelola materi khusus untuk kelas ini.
+          </p>
         </div>
 
         <div className="flex items-center gap-3 w-full md:w-auto">
@@ -114,7 +135,9 @@ export default function Materials() {
                   <FaFileAlt className="text-green-500 text-2xl" />
                 )}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    {item.title}
+                  </h3>
                   <p className="text-gray-500 text-sm">{item.course}</p>
                 </div>
               </div>
@@ -147,7 +170,7 @@ export default function Materials() {
         ) : (
           <div className="col-span-full flex flex-col items-center justify-center py-10 text-gray-500">
             <FaFileAlt className="text-4xl mb-2 opacity-60" />
-            <p>Tidak ada materi yang ditemukan.</p>
+            <p>Tidak ada materi untuk kelas ini.</p>
           </div>
         )}
       </div>
@@ -174,7 +197,9 @@ export default function Materials() {
                   type="text"
                   className="w-full border px-3 py-2 rounded-lg mt-1"
                   value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, title: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -185,18 +210,9 @@ export default function Materials() {
                   className="w-full border px-3 py-2 rounded-lg mt-1"
                   rows="3"
                   value={formData.desc}
-                  onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="text-sm text-gray-600">Nama Kursus</label>
-                <input
-                  type="text"
-                  className="w-full border px-3 py-2 rounded-lg mt-1"
-                  value={formData.course}
-                  onChange={(e) => setFormData({ ...formData, course: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, desc: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -206,7 +222,9 @@ export default function Materials() {
                 <select
                   className="w-full border px-3 py-2 rounded-lg mt-1"
                   value={formData.type}
-                  onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, type: e.target.value })
+                  }
                 >
                   <option value="video">Video</option>
                   <option value="file">Dokumen</option>

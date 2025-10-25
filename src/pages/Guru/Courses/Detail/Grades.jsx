@@ -1,7 +1,7 @@
 export default function Grades() {
   return (
     <div>
-      <h2 className="mb-2 text-xl font-semibold">Grades</h2>
+      <h2 className="mb-2 text-xl font-semibold">Nilai</h2>
       <p className="mb-4 text-gray-600">Nilai hasil evaluasi siswa.</p>
 
       <table className="w-full border border-collapse">

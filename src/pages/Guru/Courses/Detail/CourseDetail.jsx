@@ -62,15 +62,15 @@ export default function CourseDetail() {
 
   // Tabs navigasi
   const tabs = [
-    { key: "classinfo", label: "Class Info" },
-    { key: "materials", label: "Materials" },
-    { key: "tasks", label: "Tasks" },
-    { key: "quiz", label: "Quiz" },
-    { key: "learningsession", label: "Learning Session" },
-    { key: "discussion", label: "Discussion" },
-    { key: "teacherstudents", label: "Teacher & Students" },
-    { key: "group", label: "Group" },
-    { key: "grades", label: "Grades" },
+    { key: "classinfo", label: "Info Kelas" },
+    { key: "materials", label: "Materi" },
+    { key: "tasks", label: "Tugas" },
+    { key: "quiz", label: "Kuis" },
+    { key: "learningsession", label: "Sesi Pembelajaran" },
+    { key: "discussion", label: "Diskusi" },
+    { key: "teacherstudents", label: "Pengajar & Peserta" },
+    { key: "group", label: "Kelompok" },
+    { key: "grades", label: "Nilai" },
   ];
 
   // Konten tiap tab
@@ -120,7 +120,7 @@ export default function CourseDetail() {
           to="/guru/courses"
           className="inline-block mb-4 text-sm text-blue-600 hover:underline"
         >
-          ← Kembali ke Courses
+          ← Kembali ke Kelas
         </Link>
 
         {/* Info utama */}

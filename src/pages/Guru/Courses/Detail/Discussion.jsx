@@ -1,7 +1,7 @@
 export default function Discussion() {
   return (
     <div>
-      <h2 className="mb-2 text-xl font-semibold">Discussions</h2>
+      <h2 className="mb-2 text-xl font-semibold">Diskusi</h2>
       <p className="mb-4 text-gray-600">
         Forum diskusi antara guru dan siswa untuk membahas materi atau tugas.
       </p>

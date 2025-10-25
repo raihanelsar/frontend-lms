@@ -1,7 +1,7 @@
 export default function TeacherStudents() {
   return (
     <div>
-      <h2 className="mb-2 text-xl font-semibold">Teacher & Students</h2>
+      <h2 className="mb-2 text-xl font-semibold">Pengajar & Peserta</h2>
       <p className="mb-4 text-gray-600">
         Daftar pengajar dan peserta kelas.
       </p>

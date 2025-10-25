@@ -167,16 +167,6 @@ export default function TeacherDashboard() {
             </div>
           </div>
 
-          {/* Aktivitas Terbaru */}
-          <div className="p-6 bg-white border border-gray-100 shadow-sm rounded-xl">
-            <h2 className="flex items-center gap-2 mb-3 text-sm font-semibold text-gray-800">
-              <Users className="w-4 h-4 text-indigo-500" />
-              Aktivitas Terbaru
-            </h2>
-            <div className="py-6 text-sm text-center text-gray-500 border-t border-gray-100">
-              Belum ada aktivitas terbaru dari kelas atau Discord.
-            </div>
-          </div>
         </div>
       </div>
     </div>

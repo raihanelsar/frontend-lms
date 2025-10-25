@@ -1,7 +1,7 @@
 export default function Group() {
   return (
     <div>
-      <h2 className="mb-2 text-xl font-semibold">Groups</h2>
+      <h2 className="mb-2 text-xl font-semibold">Kelompok</h2>
       <p className="mb-4 text-gray-600">
         Kelompok belajar siswa untuk proyek atau diskusi kolaboratif.
       </p>

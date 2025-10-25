@@ -1,7 +1,7 @@
 export default function LearningSession() {
   return (
     <div>
-      <h2 className="mb-2 text-xl font-semibold">Learning Sessions</h2>
+      <h2 className="mb-2 text-xl font-semibold">Sesi Pembelajaran</h2>
       <p className="mb-4 text-gray-600">
         Sesi pembelajaran terjadwal, termasuk pertemuan online atau tatap muka.
       </p>
