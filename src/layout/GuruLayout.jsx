@@ -30,7 +30,6 @@ const GuruLayout = () => {
     { name: "🏠 Dashboard", path: "/guru/dashboard" },
     { name: "📚 Kelas", path: "/guru/courses" },
     { name: "📢 Pengumuman", path: "/guru/announcement" },
-    { name: "📅 Jadwal", path: "/guru/schedule" },
   ];
 
   useEffect(() => {

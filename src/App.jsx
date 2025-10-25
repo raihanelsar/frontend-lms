@@ -35,7 +35,7 @@ function App() {
         />
         <Route path="/logout" element={<Logout />} />
 
-        {/* === Guru Pages (protected) === */}
+        {/* === Guru Pages (Protected) === */}
         <Route
           path="/guru"
           element={
@@ -44,6 +44,9 @@ function App() {
             </ProtectedRoute>
           }
         >
+          {/* Redirect default /guru ke dashboard */}
+          <Route index element={<Navigate to="dashboard" replace />} />
+          
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="courses" element={<Courses />} />
           <Route path="courses/:id" element={<CourseDetail />} />
@@ -52,7 +55,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
         </Route>
 
-        {/* Default route */}
+        {/* Fallback untuk route yang tidak dikenal */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>

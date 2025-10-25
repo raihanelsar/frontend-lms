@@ -1,33 +1,28 @@
+import React from "react";
+import { FaChartLine, FaHourglassHalf } from "react-icons/fa";
+
 export default function Grades() {
   return (
-    <div>
-      <h2 className="mb-2 text-xl font-semibold">Nilai</h2>
-      <p className="mb-4 text-gray-600">Nilai hasil evaluasi siswa.</p>
+    <div className="p-8 text-center bg-white border border-gray-100 shadow-sm rounded-2xl">
+      <div className="flex flex-col items-center justify-center space-y-4">
+        {/* Ikon utama */}
+        <div className="p-4 rounded-full bg-indigo-50 w-fit">
+          <FaChartLine className="text-4xl text-indigo-600" />
+        </div>
 
-      <table className="w-full border border-collapse">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="p-2 border">Nama</th>
-            <th className="p-2 border">Tugas</th>
-            <th className="p-2 border">Kuis</th>
-            <th className="p-2 border">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="p-2 border">Ahmad F.</td>
-            <td className="p-2 border">90</td>
-            <td className="p-2 border">85</td>
-            <td className="p-2 border">88</td>
-          </tr>
-          <tr>
-            <td className="p-2 border">Bella N.</td>
-            <td className="p-2 border">95</td>
-            <td className="p-2 border">90</td>
-            <td className="p-2 border">93</td>
-          </tr>
-        </tbody>
-      </table>
+        {/* Judul dan deskripsi */}
+        <h2 className="text-2xl font-semibold text-gray-800">Nilai Siswa</h2>
+        <p className="max-w-md text-gray-600">
+          Fitur penilaian untuk tugas, kuis, dan total nilai siswa sedang dalam
+          tahap pengembangan.
+        </p>
+
+        {/* Status pengembangan */}
+        <div className="flex items-center gap-2 px-4 py-2 mt-3 text-indigo-700 bg-indigo-100 rounded-full w-fit">
+          <FaHourglassHalf />
+          <span className="font-medium">Fitur penilaian akan segera hadir</span>
+        </div>
+      </div>
     </div>
   );
 }

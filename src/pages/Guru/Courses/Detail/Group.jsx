@@ -1,21 +1,27 @@
+import React from "react";
+import { FaUsers, FaHourglassHalf } from "react-icons/fa";
+
 export default function Group() {
   return (
-    <div>
-      <h2 className="mb-2 text-xl font-semibold">Kelompok</h2>
-      <p className="mb-4 text-gray-600">
-        Kelompok belajar siswa untuk proyek atau diskusi kolaboratif.
-      </p>
+    <div className="p-8 text-center bg-white border border-gray-100 shadow-sm rounded-2xl">
+      <div className="flex flex-col items-center justify-center space-y-4">
+        <div className="p-4 rounded-full bg-indigo-50 w-fit">
+          <FaUsers className="text-4xl text-indigo-600" />
+        </div>
 
-      <ul className="space-y-3">
-        <li className="p-3 border rounded-lg hover:bg-gray-50">
-          <p className="font-medium">Kelompok 1</p>
-          <p className="text-sm text-gray-500">Ahmad, Bella, Citra</p>
-        </li>
-        <li className="p-3 border rounded-lg hover:bg-gray-50">
-          <p className="font-medium">Kelompok 2</p>
-          <p className="text-sm text-gray-500">Dina, Eko, Farhan</p>
-        </li>
-      </ul>
+        <h2 className="text-2xl font-semibold text-gray-800">
+          Kelompok Belajar
+        </h2>
+        <p className="max-w-md text-gray-600">
+          Fitur pengelolaan kelompok siswa untuk proyek dan diskusi kolaboratif
+          sedang dalam tahap pengembangan.
+        </p>
+
+        <div className="flex items-center gap-2 px-4 py-2 mt-3 text-indigo-700 bg-indigo-100 rounded-full w-fit">
+          <FaHourglassHalf />
+          <span className="font-medium">Fitur kelompok akan segera hadir</span>
+        </div>
+      </div>
     </div>
   );
 }
