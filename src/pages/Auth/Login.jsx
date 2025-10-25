@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate, Link } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
+import AuthLayout from "../../components/AuthLayout";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -30,12 +32,11 @@ export default function Login() {
       return Swal.fire({
         icon: "error",
         title: "Belum ada akun terdaftar!",
-        text: "Silakan lakukan registrasi terlebih dahulu.",
+        text: "Silakan registrasi terlebih dahulu.",
         confirmButtonColor: "#2563eb",
       });
     }
 
-    // Validasi kredensial
     if (
       registeredUser.email === email &&
       registeredUser.password === password
@@ -43,7 +44,7 @@ export default function Login() {
       const userData = {
         name: registeredUser.name,
         email,
-        role: registeredUser.role || "guru", // bisa disesuaikan nanti
+        role: registeredUser.role || "guru",
       };
       localStorage.setItem("user", JSON.stringify(userData));
 
@@ -53,7 +54,9 @@ export default function Login() {
         showConfirmButton: false,
         timer: 1200,
       }).then(() => {
-        navigate("/dashboard"); // arahkan ke dashboard guru
+        navigate(
+          userData.role === "guru" ? "/guru/dashboard" : "/admin/dashboard"
+        );
       });
     } else {
       Swal.fire({
@@ -67,81 +70,65 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-indigo-200">
-      <div className="w-full max-w-sm p-8 bg-white shadow-xl rounded-2xl">
-        {/* Logo */}
-        <div className="flex flex-col items-center mb-6">
-          <img
-            src="/Learncord.png"
-            alt="LearnCord Logo"
-            className="w-20 h-20 mb-2"
+    <AuthLayout
+      title="Masuk ke LearnCord"
+      subtitle="Learning Management System berbasis Discord"
+    >
+      <form onSubmit={handleLogin} className="space-y-4">
+        <div>
+          <label className="block mb-1 text-sm font-medium text-gray-700">
+            Email
+          </label>
+          <input
+            type="email"
+            placeholder="Masukkan email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <h2 className="text-2xl font-bold text-center text-blue-600">
-            Masuk ke LearnCord
-          </h2>
-          <p className="mt-1 text-sm text-center text-gray-500">
-            Learning Management System berbasis Discord
-          </p>
         </div>
 
-        {/* Form Login */}
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
-              Email
-            </label>
+        <div>
+          <label className="block mb-1 text-sm font-medium text-gray-700">
+            Kata Sandi
+          </label>
+          <div className="relative">
             <input
-              type="email"
-              placeholder="Masukkan email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type={showPassword ? "text" : "password"}
+              placeholder="Masukkan kata sandi"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-3 py-2 pr-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 flex items-center text-gray-500 right-3 hover:text-gray-700"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
           </div>
+        </div>
 
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">
-              Kata Sandi
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Masukkan kata sandi"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 pr-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 flex items-center text-gray-500 right-3 hover:text-gray-700"
-              >
-                {showPassword ? "🙈" : "👁️"}
-              </button>
-            </div>
-          </div>
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full text-white py-2 rounded-lg transition font-medium ${
+            loading
+              ? "bg-blue-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
+          }`}
+        >
+          {loading ? "Memproses..." : "Masuk"}
+        </button>
+      </form>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full text-white py-2 rounded-lg transition font-medium ${
-              loading
-                ? "bg-blue-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
-            }`}
-          >
-            {loading ? "Memproses..." : "Masuk"}
-          </button>
-        </form>
-
-        {/* Footer */}
-        <p className="mt-5 text-sm text-center text-gray-500">
-          Belum punya akun?{" "}
-          <Link to="/register" className="text-blue-600 hover:underline">
-            Daftar sekarang
-          </Link>
-        </p>
-      </div>
-    </div>
+      <p className="mt-5 text-sm text-center text-gray-500">
+        Belum punya akun?{" "}
+        <Link to="/register" className="text-blue-600 hover:underline">
+          Daftar sekarang
+        </Link>
+      </p>
+    </AuthLayout>
   );
 }

@@ -3,54 +3,61 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Calendar, BookOpen, Users } from "lucide-react";
 
-// Komponen kecil untuk Statistik
+// ========== Komponen Statistik ==========
 const StatCard = ({ label, value }) => (
-  <div className="p-4 text-center transition bg-white border shadow-sm rounded-xl hover:shadow-md">
-    <p className="text-lg font-semibold text-indigo-600">{value}</p>
-    <p className="text-xs text-gray-500">{label}</p>
-  </div>
+  <motion.div
+    whileHover={{ y: -2, scale: 1.02 }}
+    transition={{ duration: 0.2 }}
+    className="flex flex-col items-center justify-center p-5 bg-white border border-gray-100 shadow-sm rounded-xl hover:shadow-md"
+  >
+    <p className="text-2xl font-bold text-indigo-600">{value}</p>
+    <p className="mt-1 text-xs font-medium text-gray-500">{label}</p>
+  </motion.div>
 );
 
-// Komponen untuk Item Jadwal
+// ========== Komponen Jadwal ==========
 const ScheduleItem = ({ subject, day, time }) => (
-  <li className="flex items-center justify-between pb-2 border-b border-gray-100">
+  <li className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
     <div>
-      <p className="font-medium text-gray-700">{subject}</p>
+      <p className="text-sm font-medium text-gray-700">{subject}</p>
       <p className="text-xs text-gray-500">{day}</p>
     </div>
-    <span className="px-2 py-1 text-xs text-indigo-600 rounded-md bg-indigo-50">
+    <span className="px-2.5 py-1 text-xs font-medium text-indigo-600 bg-indigo-50 rounded-lg">
       {time}
     </span>
   </li>
 );
 
-// Komponen untuk Card Kelas
+// ========== Komponen Kelas ==========
 const CourseCard = ({ course }) => (
   <motion.div
-    whileHover={{ y: -3 }}
-    className="p-5 transition bg-white border border-gray-100 rounded-xl hover:shadow-md"
+    whileHover={{ y: -3, scale: 1.01 }}
+    transition={{ duration: 0.2 }}
+    className="p-5 bg-white border border-gray-100 shadow-sm rounded-xl hover:shadow-md"
   >
     <div className="flex items-center gap-2 mb-2">
       <BookOpen className="w-5 h-5 text-indigo-500" />
       <h3 className="text-sm font-semibold text-gray-800">{course.title}</h3>
     </div>
+
     <p className="mb-2 text-xs text-gray-500">{course.desc}</p>
     <p className="mb-1 text-xs text-gray-600">👨‍🏫 {course.teacher}</p>
     <p className="mb-3 text-xs text-gray-500">{course.time}</p>
 
-    {/* Progress Bar */}
-    <div className="w-full h-1.5 bg-gray-200 rounded-full">
-      <div
+    <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden mb-3">
+      <motion.div
+        initial={{ width: 0 }}
+        animate={{ width: `${course.progress}%` }}
+        transition={{ duration: 0.8 }}
         className="h-1.5 bg-indigo-500 rounded-full"
-        style={{ width: `${course.progress}%` }}
-      ></div>
+      />
     </div>
 
-    <div className="flex items-center justify-between mt-3 text-xs text-gray-500">
+    <div className="flex items-center justify-between text-xs text-gray-500">
       <span>Kemajuan: {course.progress}%</span>
       <Link
-        to={`/guru/courses/${course.id}`} // <== arahkan ke halaman detail sesuai ID
-        className="text-indigo-600 hover:underline"
+        to={`/guru/courses/${course.id}`}
+        className="font-medium text-indigo-600 hover:underline"
       >
         Detail →
       </Link>
@@ -103,23 +110,25 @@ export default function TeacherDashboard() {
   return (
     <div className="min-h-screen p-6 bg-gray-50">
       {/* Header */}
-      <div className="mx-auto mb-6 max-w-7xl">
-        <h1 className="text-xl font-semibold text-gray-800">
-          Selamat Datang, Raihan Elsar Kusuma 👋
-        </h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Berikut ringkasan aktivitas Anda minggu ini.
-        </p>
+      <div className="flex flex-wrap items-center justify-between gap-4 mx-auto mb-8 max-w-7xl">
+        <div>
+          <h1 className="text-xl font-semibold text-gray-800">
+            Selamat Datang, Raihan Elsar Kusuma 👋
+          </h1>
+          <p className="mt-1 text-sm text-gray-500">
+            Berikut ringkasan aktivitas Anda minggu ini.
+          </p>
+        </div>
       </div>
 
-      {/* GRID */}
-      <div className="grid grid-cols-1 gap-6 mx-auto max-w-7xl lg:grid-cols-3">
+      {/* Grid Utama */}
+      <div className="grid grid-cols-1 gap-6 mx-auto lg:grid-cols-3 max-w-7xl">
         {/* Kolom Kiri */}
         <div className="space-y-6">
           {/* Statistik */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-2">
-            {stats.map((stat, i) => (
-              <StatCard key={i} label={stat.label} value={stat.value} />
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-2">
+            {stats.map((s, i) => (
+              <StatCard key={i} label={s.label} value={s.value} />
             ))}
           </div>
 
@@ -129,7 +138,7 @@ export default function TeacherDashboard() {
               <Calendar className="w-4 h-4 text-indigo-500" />
               Jadwal Minggu Ini
             </h2>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-1">
               {schedule.map((item, i) => (
                 <ScheduleItem
                   key={i}
@@ -144,29 +153,30 @@ export default function TeacherDashboard() {
 
         {/* Kolom Kanan */}
         <div className="space-y-6 lg:col-span-2">
-          {/* Daftar Kelas */}
           <div className="p-6 bg-white border border-gray-100 shadow-sm rounded-xl">
-            <div className="flex items-center justify-between pb-3 mb-4 border-b border-gray-100">
-              <h2 className="text-sm font-semibold text-gray-800">Kelas Diampu</h2>
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col items-start justify-between gap-3 pb-4 mb-4 border-b border-gray-100 sm:flex-row sm:items-center">
+              <h2 className="text-sm font-semibold text-gray-800">
+                📚 Kelas yang Anda Ampu
+              </h2>
+              <div className="flex items-center w-full gap-2 sm:w-auto">
                 <input
                   type="text"
                   placeholder="Cari kelas..."
-                  className="text-sm border rounded-lg px-3 py-1.5 focus:ring-indigo-200 focus:outline-none"
+                  className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-indigo-100 focus:outline-none w-full sm:w-auto"
                 />
-                <select className="text-sm border rounded-lg px-2 py-1.5 text-gray-600">
+                <select className="text-sm border border-gray-200 rounded-lg px-2 py-1.5 text-gray-600 focus:ring-2 focus:ring-indigo-100 focus:outline-none">
                   <option>2025/2026 Ganjil</option>
+                  <option>2024/2025 Genap</option>
                 </select>
               </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
-              {courses.map((course) => (
-                <CourseCard key={course.id} course={course} />
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {courses.map((c) => (
+                <CourseCard key={c.id} course={c} />
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </div>
